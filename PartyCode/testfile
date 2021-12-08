@@ -1,0 +1,17 @@
+adminusermapper test 
+
+select * 
+from   (select row_number() over (order by u.uno desc) rn, users_select.*
+        from ( select u.*, this.your_title recentReserv
+                from users u 
+                left outer join (select a.*, b.your_title 
+                    from ( select my_id, max(this_regdate) reg 
+                            from iboughtthis 
+                            group by my_id) a
+                    inner join iboughtthis b
+                    on a.reg = b.this_regdate) this
+                    on u.id = this.my_id
+                where uno like '%searchName%'
+                ) users_select
+) 
+where rn > 1 and rn <= 10
