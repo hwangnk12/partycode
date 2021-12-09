@@ -81,15 +81,14 @@
 	<!-- doughnut -->
 	<select id="homeTheme" resultType="AdminDashboardVO" >
 		SELECT PTHEME, PERCENT
-		FROM (SELECT A.*,
-	                 TRUNC( RATIO_TO_REPORT(TOTAL) OVER() * 100, 1 ) AS PERCENT,
-	                 ROWNUM AS RN
-	         FROM (SELECT PTHEME,
-	                      COUNT(PTHEME) AS TOTAL
-	                        FROM PARTY
-	                        GROUP BY PTHEME
-	                        ORDER BY TOTAL DESC
-	         ) A 
+		FROM   (SELECT	A.*,
+				TRUNC( RATIO_TO_REPORT(TOTAL) OVER() * 100, 1 ) AS PERCENT,
+				ROWNUM AS RN
+			FROM (SELECT PTHEME,
+				      COUNT(PTHEME) AS TOTAL
+					FROM PARTY
+					GROUP BY PTHEME
+					ORDER BY TOTAL DESC) A 
 		)
 		<![CDATA[
 		WHERE RN <=5
